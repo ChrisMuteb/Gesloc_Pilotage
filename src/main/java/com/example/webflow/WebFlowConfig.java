@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.webflow.config.FlowBuilderServicesBuilder;
 import org.springframework.webflow.config.FlowDefinitionRegistryBuilder;
@@ -18,6 +19,7 @@ import org.springframework.webflow.mvc.servlet.FlowHandlerMapping;
 import java.util.Collections;
 
 @Configuration
+@ImportResource("classpath:/applicationContext.xml")
 public class WebFlowConfig {
     @Autowired
     private ApplicationContext applicationContext;
