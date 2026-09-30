@@ -12,4 +12,10 @@ public class PilotageFormAction extends FormAction {
 
         return super.setupForm(requestContext);
     }
+
+    public Event sumbmitDemande(RequestContext requestContext) throws Exception {
+        bind(requestContext);
+
+        return success();
+    }
 }

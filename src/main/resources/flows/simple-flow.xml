@@ -10,6 +10,14 @@
         <on-render>
             <evaluate expression="pilotageFormAction.setupForm" />
         </on-render>
+        <transition on="listemensuelle" to="listemensuelle"/>
     </view-state>
+
+    <action-state id="listemensuelle">
+
+        <evaluate expression="pilotageFormAction.sumbmitDemande" />
+        <transition on="success" to=""/>
+        <transition on="error" to=""/>
+    </action-state>
 
 </flow>
