@@ -14,7 +14,6 @@
     </view-state>
 
     <action-state id="listemensuelle">
-
         <evaluate expression="pilotageFormAction.sumbmitDemande" />
         <transition on="success" to=""/>
         <transition on="error" to=""/>

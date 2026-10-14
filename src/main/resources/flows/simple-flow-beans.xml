@@ -4,6 +4,9 @@
        xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="pilotageFormAction" class="com.example.webflow.action.PilotageFormAction">
+        <property name="formObjectName" value="pilotageForm" />
         <property name="formObjectClass" value="com.example.webflow.dto.PilotageForm" />
+        <property name="formObjectScope" value="FLOW" />
+        <property name="formErrorsScope" value="REQUEST" />
     </bean>
 </beans>

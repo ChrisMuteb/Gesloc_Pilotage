@@ -9,9 +9,9 @@ public class PilotageForm implements Serializable {
     private String cdApplication;
     private String cdRequete;
     private String cdEmail;
-    private List<String> departements;
-    private List<String> communes;
-    private List<String> application;
+    private List<Departement> departements;
+    private List<Commune> communes;
+    private List<Application> application;
     private List<String> requetes;
 
     public String getCdDepartement() {
@@ -54,27 +54,27 @@ public class PilotageForm implements Serializable {
         this.cdEmail = cdEmail;
     }
 
-    public List<String> getDepartements() {
+    public List<Departement> getDepartements() {
         return departements;
     }
 
-    public void setDepartements(List<String> departements) {
+    public void setDepartements(List<Departement> departements) {
         this.departements = departements;
     }
 
-    public List<String> getCommunes() {
+    public List<Commune> getCommunes() {
         return communes;
     }
 
-    public void setCommunes(List<String> communes) {
+    public void setCommunes(List<Commune> communes) {
         this.communes = communes;
     }
 
-    public List<String> getApplication() {
+    public List<Application> getApplication() {
         return application;
     }
 
-    public void setApplication(List<String> application) {
+    public void setApplication(List<Application> application) {
         this.application = application;
     }
 
