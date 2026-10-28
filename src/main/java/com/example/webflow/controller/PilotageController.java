@@ -21,4 +21,10 @@ public class PilotageController {
         }
         return nopermis.substring(0, 3) + "-" + nopermis.substring(3,6) + "-" + nopermis.substring(6,9);
     }
+
+    @PostMapping(value = "/communes")
+    @ResponseBody
+    public String communes(@RequestParam("departement") String departement){
+        return "You have reached cmmune " + departement;
+    }
 }

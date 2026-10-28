@@ -1,6 +1,8 @@
 <%@page import="java.net.URI"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ page pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
@@ -33,17 +35,19 @@
                 name="pilotage"
                 action="${flowExecutionUrl}&_eventId=listemensuelle&_csrf=${_csrf.token}">
                 <div class="row">
+
                     <div class="col-md-6">
                         <label>Departement: </label>
-                        <form:select id="departement" path="cdDepartement">
-                            <form:option value="33">33</form:option>
-                            <form:option value="44">44</form:option>
-                            <form:option value="57">57</form:option>
-                            <form:option value="75">75</form:option>
-                            <form:option value="92">92</form:option>
+                        <form:select id="departement" path="cdDepartement" onchange="fetchCommuneFromDept();">
+                            <c:forEach var="departement" items="${pilotageForm.departements}">
+                                <form:option name="cdDepartement" value="${departement.code}">
+                                    <c:out value="${departement.code}"/> - <c:out value="${departement.libelle}"/>
+                                </form:option>
+                            </c:forEach>
                         </form:select>
                         <form:errors path="cdDepartement" />
                     </div>
+
                     <div class="col-md-6">
                         <label>Commune: </label>
                         <form:select id="commune" path="cdCommune">
@@ -110,11 +114,30 @@
 
         <script>
             $(document).ready(function(){
-
+                console.log("Home is ready");
 
 
 
             });
+
+            function fetchCommuneFromDept()
+            {
+                const url = '${urlPlateforme}/communes?_csrf=${_csrf.token}';
+                let dept = this.document.getElementById("departement").value;
+                console.log("commune has been selected ", dept);
+
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: { departement: dept },
+                    success: function(response){
+                        console.log(response);
+                    },
+                    error: function (jqXHR){
+                        console.error(jqXHR.status);
+                    }
+                });
+            }
         </script>
 
         <script src="https://cdn.datatables.net/2.3.3/js/dataTables.min.js"></script>
