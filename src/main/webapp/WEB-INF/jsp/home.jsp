@@ -39,6 +39,9 @@
                     <div class="col-md-6">
                         <label>Departement: </label>
                         <form:select id="departement" path="cdDepartement" onchange="fetchCommuneFromDept();">
+                            <form:option value="">
+                                <c:out value="Selectionez un departement"/>
+                            </form:option>
                             <c:forEach var="departement" items="${pilotageForm.departements}">
                                 <form:option name="cdDepartement" value="${departement.code}">
                                     <c:out value="${departement.code}"/> - <c:out value="${departement.libelle}"/>
@@ -51,11 +54,9 @@
                     <div class="col-md-6">
                         <label>Commune: </label>
                         <form:select id="commune" path="cdCommune">
-                            <form:option value="002">002</form:option>
-                            <form:option value="050">050</form:option>
-                            <form:option value="33">403</form:option>
-                            <form:option value="33">001</form:option>
-                            <form:option value="33">004</form:option>
+                            <form:option value="">
+                                Selectionez une commune
+                            </form:option>
                         </form:select>
                         <form:errors path="cdCommune" />
                     </div>
@@ -63,21 +64,24 @@
                 <div class="row">
                     <div class="col-md-6">
                         <label>Application: </label>
-                        <form:select id="application" path="cdApplication">
-                            <form:option value="surf">SURF</form:option>
-                            <form:option value="gmbi">GMBI</form:option>
-                            <form:option value="gestiontu">GESTION TU</form:option>
-                            <form:option value="33">DINAR</form:option>
-                            <form:option value="33">PLATAU</form:option>
+                        <form:select id="application" path="cdApplication" onchange="fetchRequeteFromApplication();">
+                            <form:option value="">
+                                <c:out value="Selectionez une application" />
+                            </form:option>
+                            <c:forEach var="application" items = "${pilotageForm.applications}">
+                                <form:option name="" value="${application.code}">
+                                    <c:out value="${application.libelle}"/>
+                                </form:option>
+                            </c:forEach>
+
                         </form:select>
                         <form:errors path="cdApplication" />
                     </div>
                     <div class="col-md-6">
                         <label>Requete: </label>
                         <form:select id="requete" path="cdRequete">
-                            <form:option value="33">Declaration TF</form:option>
-                            <form:option value="33">Declaration TU</form:option>
-                            <form:option value="33">Declaration TF/TU</form:option>
+                            <form:option value="">Selectionez une requete</form:option>
+
                         </form:select>
                         <form:errors path="cdRequete" />
                     </div>
@@ -132,6 +136,42 @@
                     data: { departement: dept },
                     success: function(response){
                         console.log(response);
+                        $('#commune').empty();
+                        const firstElement = '<option value="">Selectionez une commune</option>';
+                        $('#commune').append(firstElement);
+                        $(response).each(function(index, item ){
+
+                            var option = $('<option value="' + item.code + '">' + item.code + ' - ' + item.libelle + '</option>');
+                            $('#commune').append(option);
+
+                        });
+                    },
+                    error: function (jqXHR){
+                        console.error(jqXHR.status);
+                    }
+                });
+            }
+
+            function fetchRequeteFromApplication()
+            {
+                const url = '${urlPlateforme}/requests?_csrf=${_csrf.token}';
+                let app = this.document.getElementById("application").value;
+
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: { app: app },
+                    success: function(response){
+                        console.log(response);
+                        $('#requete').empty();
+                        const firstElement = '<option value="">Selectionez une commune</option>';
+
+                        $('#requete').append(firstElement);
+
+                        $(response).each(function(index, item){
+                            var option = $('<option value="' + item.code + '">' + item.code + ' - ' + item.libelle + '</option>');
+                            $('#requete').append(option);
+                        });
                     },
                     error: function (jqXHR){
                         console.error(jqXHR.status);

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.util.Collections;
 import java.util.List;
 
 @Repository("pilotageDao")
@@ -28,7 +29,46 @@ public class PilotageDaoImpl implements PilotageDao{
     }
 
     @Override
-    public List<Object> fetchCommuneByDepartement(String cdDept) {
-        return null;
+    public List<Object[]> fetchCommuneByDepartement(String cdDept) {
+        List<Object[]> result = null;
+
+        try {
+            Query query = entityManager.createNativeQuery(RequetHelper.REQ_LIST_COMMUNE_PAR_DEPT)
+                    .setParameter("ccodep", cdDept);
+            result = query.getResultList();
+        }catch (Exception e){
+            throw new RuntimeException("Exception occured during communes retrieval of data" + e);
+        }
+
+        return result;
+    }
+
+    @Override
+    public List<Object[]> fetchApplications() {
+        List<Object[]> result = null;
+
+        try{
+            Query query = entityManager.createNativeQuery(RequetHelper.REQ_LIST_APPLICATION);
+            result = query.getResultList();
+        }
+        catch (Exception e){
+            throw new RuntimeException("Exception occured during applications retrieval of data");
+        }
+        return result;
+    }
+
+    @Override
+    public List<Object[]> fetchRequetes(String app) {
+        List<Object[]> result = null;
+
+        try{
+            Query query = entityManager.createNativeQuery(RequetHelper.REQ_LIST_REQUETE_PAR_APP).setParameter("application", app);
+            result = query.getResultList();
+        }
+        catch (Exception e){
+            throw new RuntimeException("Exception occured during applications retrieval of data");
+        }
+
+        return result;
     }
 }

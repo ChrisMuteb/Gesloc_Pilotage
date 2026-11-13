@@ -1,12 +1,23 @@
 package com.example.webflow.controller;
 
+import com.example.webflow.dto.Commune;
+import com.example.webflow.dto.Requete;
+import com.example.webflow.service.PilotageService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 @Controller
 public class PilotageController {
+
+    private final PilotageService pilotageService;
+
+    public PilotageController(PilotageService pilotageService) {
+        this.pilotageService = pilotageService;
+    }
 
     @PostMapping("/fetchData")
     @ResponseBody
@@ -24,7 +35,15 @@ public class PilotageController {
 
     @PostMapping(value = "/communes")
     @ResponseBody
-    public String communes(@RequestParam("departement") String departement){
-        return "You have reached cmmune " + departement;
+    public List<Commune> fetchCommunesParDepartement(@RequestParam("departement") String departement){
+        List<Commune> result = this.pilotageService.fetchCommunes(departement);
+        return result;
+    }
+
+    @PostMapping(value="/requests")
+    @ResponseBody
+    public List<Requete> fetchRequetesParApplication(@RequestParam("app") String app){
+        List<Requete> result = this.pilotageService.fetchRequetes(app);
+        return result;
     }
 }

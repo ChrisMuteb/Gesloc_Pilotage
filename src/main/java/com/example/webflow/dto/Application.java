@@ -1,4 +1,6 @@
 package com.example.webflow.dto;
 
-public class Application extends CodeLibelle{
+import java.io.Serializable;
+
+public class Application extends CodeLibelle implements Serializable {
 }
